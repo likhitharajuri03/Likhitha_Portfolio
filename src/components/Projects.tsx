@@ -240,7 +240,7 @@ export default function Projects() {
         // Filter out repositories that are represented by major projects
         const majorNames = ["HelixDB", "SafeUpload", "Plant-Disease-Detection", "SafeUpload---ProActive_Deepfake_Prevention"];
         const filtered = data
-          .filter((repo: any) => !majorNames.includes(repo.name) && repo.name !== "MyPortfolio")
+          .filter((repo: any) => !majorNames.includes(repo.name) && repo.name !== "MyPortfolio" && repo.name !== "Likhitha_Portfolio")
           .map((repo: any) => {
             const { tech, desc } = getTechAndDescForRepo(repo.name, repo.language, repo.description);
             return {

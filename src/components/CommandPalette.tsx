@@ -74,7 +74,7 @@ export default function CommandPalette() {
   };
 
   const handleDownloadResume = () => {
-    window.open("https://drive.google.com/file/d/1mZw3Wpk8R1Or4dFwT2mB6IyuQ-4LRycc/view?usp=drivesdk", "_blank");
+    window.open("https://drive.google.com/file/d/104i0DjSRXf7wk5a1LLhblEiIsO_XHCXP/view?usp=drivesdk", "_blank");
     setCommandPaletteOpen(false);
   };
 

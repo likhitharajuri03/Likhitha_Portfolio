@@ -32,6 +32,13 @@ interface MiniProject {
 
 const fallbackMiniProjects: MiniProject[] = [
   {
+    name: "AdvancedAts",
+    description: "AI-powered Applicant Tracking System (ATS) optimizing resume parsing and job description alignment using Google Gemini Pro NLP modeling.",
+    tech: ["Python", "Gemini Pro", "Streamlit", "PyPDF2"],
+    stars: 0,
+    url: "https://github.com/jeevikar14/AdvancedAts"
+  },
+  {
     name: "Driver_Drowsiness_Detection",
     description: "Real-time computer vision system tracking facial landmarks and Eye Aspect Ratio (EAR) to detect driver fatigue.",
     tech: ["Python", "OpenCV", "Dlib", "NumPy"],
@@ -96,7 +103,10 @@ const getTechAndDescForRepo = (name: string, defaultLang: string, defaultDesc: s
   let tech = [defaultLang || "TypeScript"];
   let desc = defaultDesc || "Open source developer code repository containing project codebase.";
 
-  if (normalized.includes("drowsiness")) {
+  if (normalized.includes("advancedats")) {
+    tech = ["Python", "Gemini Pro", "Streamlit", "PyPDF2"];
+    desc = "AI-powered Applicant Tracking System (ATS) optimizing resume parsing and job description alignment using Google Gemini Pro NLP modeling.";
+  } else if (normalized.includes("drowsiness")) {
     tech = ["Python", "OpenCV", "Dlib", "NumPy"];
     desc = "Real-time computer vision system tracking facial landmarks and Eye Aspect Ratio (EAR) to detect driver fatigue.";
   } else if (normalized.includes("skyride")) {
@@ -227,10 +237,18 @@ export default function Projects() {
         if (!res.ok) throw new Error("Rate limit or user not found");
         const data = await res.json();
         
+        const advancedAtsProject: MiniProject = {
+          name: "AdvancedAts",
+          description: "AI-powered Applicant Tracking System (ATS) optimizing resume parsing and job description alignment using Google Gemini Pro NLP modeling.",
+          tech: ["Python", "Gemini Pro", "Streamlit", "PyPDF2"],
+          stars: 0,
+          url: "https://github.com/jeevikar14/AdvancedAts"
+        };
+
         // Filter out repositories that are represented by major projects
         const majorNames = ["HelixDB", "SafeUpload", "Plant-Disease-Detection", "SafeUpload---ProActive_Deepfake_Prevention"];
         const filtered = data
-          .filter((repo: any) => !majorNames.includes(repo.name) && repo.name !== "MyPortfolio")
+          .filter((repo: any) => !majorNames.includes(repo.name) && repo.name !== "MyPortfolio" && repo.name !== "AdvancedAts")
           .map((repo: any) => {
             const { tech, desc } = getTechAndDescForRepo(repo.name, repo.language, repo.description);
             return {
@@ -242,9 +260,7 @@ export default function Projects() {
             };
           });
         
-        if (filtered.length > 0) {
-          setMiniProjects(filtered);
-        }
+        setMiniProjects([advancedAtsProject, ...filtered]);
       } catch (err) {
         console.warn("Using fallback local cached mini-projects", err);
       } finally {

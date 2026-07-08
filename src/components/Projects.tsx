@@ -233,14 +233,17 @@ export default function Projects() {
     const fetchRepos = async () => {
       try {
         setLoadingMini(true);
-        const res = await fetch("https://api.github.com/users/likhitharajuri03/repos?sort=updated");
+        const res = await fetch("https://api.github.com/users/likhitharajuri03/repos?sort=updated&t=" + Date.now(), { cache: "no-store" });
         if (!res.ok) throw new Error("Rate limit or user not found");
         const data = await res.json();
         
-        // Filter out repositories that are represented by major projects
+        // Filter out repositories that are represented by major projects or portfolio codebases
         const majorNames = ["HelixDB", "SafeUpload", "Plant-Disease-Detection", "SafeUpload---ProActive_Deepfake_Prevention"];
         const filtered = data
-          .filter((repo: any) => !majorNames.includes(repo.name) && repo.name !== "MyPortfolio" && repo.name !== "Likhitha_Portfolio")
+          .filter((repo: any) => 
+            !majorNames.includes(repo.name) && 
+            !repo.name.toLowerCase().includes("portfolio")
+          )
           .map((repo: any) => {
             const { tech, desc } = getTechAndDescForRepo(repo.name, repo.language, repo.description);
             return {
